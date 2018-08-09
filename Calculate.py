@@ -1,14 +1,14 @@
-def calculateY(latitude, coefY, posCoef):
-    count = coefY
-    posY = posCoef - 1
-    while (count <= latitude):
-        posY = posY - 1
-        count = count + coefY
-    return posY
+def calculateY(latitude, coef_y, coef_pos):
+    index = coef_y
+    pos_y = coef_pos - 1
+    while(index <= latitude):
+        pos_y -= 1
+        index += coef_y
+    return pos_y
 
 
 def calculate(latitude, longitude, scale, hemisphere):
-    posX = 30
+    pos_x = 30
     name = []
     x = []
     y = []
@@ -22,38 +22,39 @@ def calculate(latitude, longitude, scale, hemisphere):
                 "XXXII", "XXXIII", "XXXIV", "XXXV", "XXXVI"], [],
                ['А', 'Б', 'В', 'Г'],
                ['а', 'б', 'в', 'г']]
-    coefX = [180, 60, 30, 15, 7.5, 3.75]  # width of zone
-    coefY = [120, 40, 20, 10, 5, 2.5]  # height of zone
-    posCoef = [2, 6, 12, 2, 2, 2]  # number of rows in zone
-
-    if (hemisphere % 2 == 1):
-        posX = 0
+    coef_x = [180, 60, 30, 15, 7.5, 3.75]  # width of zone
+    coef_y = [120, 40, 20, 10, 5, 2.5]  # height of zone
+    coef_pos = [2, 6, 12, 2, 2, 2]  # number of rows in zone
+    
+    if hemisphere % 2 == 1:
+        pos_x = 0
         longitude = 10800 - longitude
-    posX = posX + longitude // 360 + 1
+
+    pos_x += longitude // 360 + 1
     name.append(symbols[0][int(latitude // 240)])
-    name.append(int(posX % 60))
-    latitude = latitude - (latitude // 240) * 240
-    longitude = longitude - ((posX - 1) - 30 * (1 - hemisphere % 2)) * 360
+    name.append(int(pos_x % 60))
+    latitude -= latitude // 240 * 240
+    longitude -= (pos_x - 1 - 30 * (1 - hemisphere % 2)) * 360
 
-    for count in range(0, 6):
-        x.append(longitude // coefX[count] + 1)
-        y.append(int(calculateY(latitude, coefY[count], posCoef[count])))
-        if (count // 2 > 0):
-            longitude = longitude - (x[count] - 1) * coefX[count]
-            latitude = latitude - (posCoef[count] - 1 - y[count]) * coefY[count]
-        if (count == 2 or count == 5):
-            name.append(int(y[count] * posCoef[count] + x[count]))
+    for index in range(0, 6):
+        x.append(longitude // coef_x[index] + 1)
+        y.append(int(calculateY(latitude, coef_y[index], coef_pos[index])))
+        if index // 2 > 0:
+            longitude -= (x[index] - 1) * coef_x[index]
+            latitude -= (coef_pos[index] - 1 - y[index]) * coef_y[index]
+        if index == 2 or index == 5:
+            name.append(int(y[index] * coef_pos[index] + x[index]))
         else:
-            name.append(symbols[count + 1][int(y[count] * posCoef[count] + x[count] - 1)])
+            name.append(symbols[index + 1][int(y[index] * coef_pos[index] + x[index] - 1)])
 
-    finalName = name[0] + '-' + str(name[1])
-    finalName = {10000: finalName + '-' + str(name[4]) + '-' + name[5] + '-' + name[6] + '-' + str(name[7]),
-                 25000: finalName + '-' + str(name[4]) + '-' + name[5] + '-' + name[6],
-                 50000: finalName + '-' + str(name[4]) + '-' + name[5],
-                 100000: finalName + '-' + str(name[4]),
-                 200000: finalName + '-' + name[3],
-                 500000: finalName + '-' + str(name[2]),
-                 1000000: finalName}[scale]
-    if (hemisphere > 1):
-        finalName = finalName + '(Ю)'
-    return finalName
+    final_name = name[0] + '-' + str(name[1])
+    final_name = {10000: final_name + '-' + str(name[4]) + '-' + name[5] + '-'+ name[6] + '-' + str(name[7]),
+                 25000: final_name + '-' + str(name[4]) + '-' + name[5] + '-' + name[6],
+                 50000: final_name + '-' + str(name[4]) + '-' + name[5],
+                 100000: final_name + '-' + str(name[4]),
+                 200000: final_name + '-' + name[3],
+                 500000: final_name + '-' + str(name[2]),
+                 1000000: final_name}[scale]
+    if hemisphere > 1:
+        final_name += '(Ю)'
+    return final_name
