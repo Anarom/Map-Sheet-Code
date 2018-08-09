@@ -38,14 +38,16 @@ def calculate(latitude, longitude, scale, hemisphere):
         else:
             name.append(symbols[index + 1][int(y[index] * coef_pos[index] + x[index] - 1)])
 
-    final_name = name[0] + '-' + str(name[1])
-    final_name += {10000: '-' + str(name[4]) + '-' + name[5] + '-'+ name[6] + '-' + str(name[7]),
-                 25000: '-' + str(name[4]) + '-' + name[5] + '-' + name[6],
-                 50000: '-' + str(name[4]) + '-' + name[5],
-                 100000: '-' + str(name[4]),
-                 200000: '-' + name[3],
-                 500000: '-' + str(name[2]),
-                 1000000: ''}[scale]
+    final_name = name[0] + str(name[1])
+    name_rules = {10000: [4,5,6,7],
+                  25000: [4,5,6],
+                  50000: [4,5],
+                  100000: [4],
+                  200000: [3],
+                  500000: [2],
+                  1000000: []}[scale]
+    for index in name_rules:
+        final_name += '-' + str(name[index])
     if hemisphere > 1:
         final_name += '(Ю)'
     return final_name
