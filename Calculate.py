@@ -48,13 +48,13 @@ def calculate(latitude, longitude, scale, hemisphere):
             name.append(symbols[index + 1][int(y[index] * coef_pos[index] + x[index] - 1)])
 
     final_name = name[0] + '-' + str(name[1])
-    final_name = {10000: final_name + '-' + str(name[4]) + '-' + name[5] + '-'+ name[6] + '-' + str(name[7]),
-                 25000: final_name + '-' + str(name[4]) + '-' + name[5] + '-' + name[6],
-                 50000: final_name + '-' + str(name[4]) + '-' + name[5],
-                 100000: final_name + '-' + str(name[4]),
-                 200000: final_name + '-' + name[3],
-                 500000: final_name + '-' + str(name[2]),
-                 1000000: final_name}[scale]
+    final_name += {10000: '-' + str(name[4]) + '-' + name[5] + '-'+ name[6] + '-' + str(name[7]),
+                 25000: '-' + str(name[4]) + '-' + name[5] + '-' + name[6],
+                 50000: '-' + str(name[4]) + '-' + name[5],
+                 100000: '-' + str(name[4]),
+                 200000: '-' + name[3],
+                 500000: '-' + str(name[2]),
+                 1000000: ''}[scale]
     if hemisphere > 1:
         final_name += '(Ю)'
     return final_name
