@@ -1,3 +1,6 @@
+from tkinter import *
+
+
 class Hemisphere_Window():
     def __init__(self, root, x, y):
         self.root = root
