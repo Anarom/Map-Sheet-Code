@@ -1,12 +1,3 @@
-def calculateY(latitude, coef_y, coef_pos):
-    index = coef_y
-    pos_y = coef_pos - 1
-    while(index <= latitude):
-        pos_y -= 1
-        index += coef_y
-    return pos_y
-
-
 def calculate(latitude, longitude, scale, hemisphere):
     pos_x = 30
     name = []
@@ -38,7 +29,7 @@ def calculate(latitude, longitude, scale, hemisphere):
 
     for index in range(0, 6):
         x.append(longitude // coef_x[index] + 1)
-        y.append(int(calculateY(latitude, coef_y[index], coef_pos[index])))
+        y.append(int(coef_pos[index] - 1 - (latitude // coef_y[index])))
         if index // 2 > 0:
             longitude -= (x[index] - 1) * coef_x[index]
             latitude -= (coef_pos[index] - 1 - y[index]) * coef_y[index]
