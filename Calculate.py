@@ -1,12 +1,3 @@
-def calculateY(latitude, coef_y, coef_pos):
-    index = coef_y
-    pos_y = coef_pos - 1
-    while(index <= latitude):
-        pos_y -= 1
-        index += coef_y
-    return pos_y
-
-
 def calculate(latitude, longitude, scale, hemisphere):
     pos_x = 30
     name = []
@@ -38,7 +29,7 @@ def calculate(latitude, longitude, scale, hemisphere):
 
     for index in range(0, 6):
         x.append(longitude // coef_x[index] + 1)
-        y.append(int(calculateY(latitude, coef_y[index], coef_pos[index])))
+        y.append(int(coef_pos[index] - 1 - (latitude // coef_y[index])))
         if index // 2 > 0:
             longitude -= (x[index] - 1) * coef_x[index]
             latitude -= (coef_pos[index] - 1 - y[index]) * coef_y[index]
@@ -47,14 +38,16 @@ def calculate(latitude, longitude, scale, hemisphere):
         else:
             name.append(symbols[index + 1][int(y[index] * coef_pos[index] + x[index] - 1)])
 
-    final_name = name[0] + '-' + str(name[1])
-    final_name = {10000: final_name + '-' + str(name[4]) + '-' + name[5] + '-'+ name[6] + '-' + str(name[7]),
-                 25000: final_name + '-' + str(name[4]) + '-' + name[5] + '-' + name[6],
-                 50000: final_name + '-' + str(name[4]) + '-' + name[5],
-                 100000: final_name + '-' + str(name[4]),
-                 200000: final_name + '-' + name[3],
-                 500000: final_name + '-' + str(name[2]),
-                 1000000: final_name}[scale]
+    final_name = name[0] + str(name[1])
+    name_rules = {10000: [4,5,6,7],
+                  25000: [4,5,6],
+                  50000: [4,5],
+                  100000: [4],
+                  200000: [3],
+                  500000: [2],
+                  1000000: []}[scale]
+    for index in name_rules:
+        final_name += '-' + str(name[index])
     if hemisphere > 1:
         final_name += '(Ю)'
     return final_name

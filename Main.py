@@ -8,14 +8,15 @@ class Main_Window():
         self.root = Tk()
         self.code = StringVar(self.root)
         self.widgets = ['Latitude', 'Longitude', 'Scale', 'Hemisphere', '', '']
+        self.windows = []
         self.root.title('Map sheet nomenclature')
         self.root.resizable(False, False)
         self.root.geometry('450x180+350+250')
         self.root.bind('<Return>', self.calc)
-        self.latitude_window = Coord_Window(self.root, 120, 10, 90)
-        self.longitude_window = Coord_Window(self.root, 120, 50, 180)
-        self.scale_window = Scale_Window(self.root, 120, 85)
-        self.hemisphere_window = Hemisphere_Window(self.root, 120, 125)
+        self.windows.append(Coord_Window(self.root, 120, 10, 90))
+        self.windows.append(Coord_Window(self.root, 120, 50, 180))
+        self.windows.append(Scale_Window(self.root, 120, 85))
+        self.windows.append(Hemisphere_Window(self.root, 120, 125))
         for index in range(0, 4):
             self.widgets[index] = Label(self.root, text = self.widgets[index])
             self.widgets[index].place(x = 60,
@@ -39,10 +40,10 @@ class Main_Window():
         self.root.mainloop()
 
     def calc(self, event):
-        self.code.set(calculate(self.latitude_window.get_value(),
-                                self.longitude_window.get_value(),
-                                self.scale_window.get_value(),
-                                self.hemisphere_window.get_value()))
+        self.code.set(calculate(self.windows[0].get_value(),
+                                self.windows[1].get_value(),
+                                self.windows[2].get_value(),
+                                self.windows[3].get_value()))
 
 
 window = Main_Window()
