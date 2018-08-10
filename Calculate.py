@@ -64,7 +64,7 @@ def corners(latitude, longitude, scale, hemisphere, corner):
              25000: 6,
              10000: 7}[scale]
     corners = [[0,0],[0,0],[0,0],[0,0]]
-    sizes = [[360, 240],[180,120],[60,40],[30,20],[15,10],[7.5,5],[3.75,2]]
+    sizes = [[360, 240],[180,120],[60,40],[30,20],[15,10],[7.5,5],[3.75,2.5]]
     x0 = 0
     y0 = 0
     for index in range(0,scale):
