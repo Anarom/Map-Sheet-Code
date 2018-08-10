@@ -38,7 +38,7 @@ def calculate(latitude, longitude, scale, hemisphere):
         else:
             name.append(symbols[index + 1][int(y[index] * coef_pos[index] + x[index] - 1)])
 
-    final_name = name[0] + str(name[1])
+    final_name = name[0] + '-' + str(name[1])
     name_rules = {10000: [4,5,6,7],
                   25000: [4,5,6],
                   50000: [4,5],
