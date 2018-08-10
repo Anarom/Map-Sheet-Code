@@ -1,7 +1,7 @@
 from tkinter import *
+from Border import *
 from Calculate import *
 from Widgets import *
-
 
 class Main_Window():
     def __init__(self):
@@ -11,12 +11,13 @@ class Main_Window():
         self.windows = []
         self.root.title('Map sheet nomenclature')
         self.root.resizable(False, False)
-        self.root.geometry('450x180+350+250')
+        self.root.geometry('730x180+350+250')
         self.root.bind('<Return>', self.calc)
         self.windows.append(Coord_Window(self.root, 120, 10, 90))
         self.windows.append(Coord_Window(self.root, 120, 50, 180))
         self.windows.append(Scale_Window(self.root, 120, 85))
         self.windows.append(Hemisphere_Window(self.root, 120, 125))
+        self.windows.append(Border_Window(self.root, 500, 40))
         for index in range(0, 4):
             self.widgets[index] = Label(self.root, text = self.widgets[index])
             self.widgets[index].place(x = 60,
@@ -28,7 +29,7 @@ class Main_Window():
                                 state = 'readonly',
                                 textvariable = self.code)
 
-        self.widgets[4].place(x = 355,
+        self.widgets[4].place(x = 350,
                               y = 40,
                               width = 105,
                               height = 20,
