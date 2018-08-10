@@ -1,4 +1,5 @@
-def calculate(latitude, longitude, scale, hemisphere):
+from math import *
+def generate_name(latitude, longitude, scale, hemisphere):
     pos_x = 30
     name = []
     x = []
@@ -51,3 +52,27 @@ def calculate(latitude, longitude, scale, hemisphere):
     if hemisphere > 1:
         final_name += '(Ю)'
     return final_name
+
+def corners(latitude, longitude, scale, corner):
+    corners = [[0,0],[0,0],[0,0],[0,0]]
+    sizes = [[360, 240],[180,120],[60,40],[30,20],[15,10],[7.5,5],[3.75,2]]
+    x0 = 0
+    y0 = 0
+    print(latitude,longitude)
+    for index in range(0,scale):
+        width = sizes[index][0]
+        height = sizes[index][1]
+        zone_x = longitude // width
+        zone_y = latitude // height
+        x0 = x0 + zone_x * width
+        y0 = y0 + zone_y * height
+        x1 = x0 + width
+        y1 = y0 + height
+        latitude -= zone_y * height
+        longitude -= zone_x * width
+        print([y0,x0],[y1,x0],[y1,x1],[y0,x1])
+        print(latitude,longitude)
+    return {0: [y0,x0],
+            1: [y1,x0],
+            2: [y1,x1],
+            3: [y0,x1]}[corner]
