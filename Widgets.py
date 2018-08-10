@@ -70,10 +70,10 @@ class Coord_Window():
             if self.list[index][0].get() == '':
                 self.list[index][0].insert(0, 0)
             self.getlist[index] = float(self.list[index][0].get())
-        if self.getlist[0] * 60 + self.getlist[1] + self.getlist[2] / 60 > self.limit * 60:
-            self.getlist[0] = self.limit
-            self.getlist[1] = 0
-            self.getlist[2] = 0
+        if self.getlist[0] * 60 + self.getlist[1] + self.getlist[2] / 60 >= self.limit * 60:
+            self.getlist[0] = self.limit - 1
+            self.getlist[1] = 59
+            self.getlist[2] = 59
         self.getlist[1] += self.getlist[2] // 60
         self.getlist[2] %= 60
         self.getlist[0] += self.getlist[1] // 60
