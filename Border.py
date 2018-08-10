@@ -33,7 +33,7 @@ class Border_Window():
                               height = 20,
                               anchor = 'e')
         self.widgets[1].place(x = self.x - 63,
-                              y = self.y + 47,
+                              y = self.y + 44,
                               width = 67,
                               height = 20,
                               anchor = 'w')
@@ -42,8 +42,8 @@ class Border_Window():
                               width = 67,
                               height = 20,
                               anchor = 'e')
-        self.widgets[3].place(x = self.x + 155,
-                              y = self.y + 47,
+        self.widgets[3].place(x = self.x + 140,
+                              y = self.y + 44,
                               width = 67,
                               height = 20,
                               anchor = 'w')
