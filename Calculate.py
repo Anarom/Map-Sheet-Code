@@ -53,12 +53,18 @@ def generate_name(latitude, longitude, scale, hemisphere):
         final_name += '(Ю)'
     return final_name
 
-def corners(latitude, longitude, scale, corner):
+def corners(latitude, longitude, scale, hemisphere, corner):
+    scale = {1000000: 1,
+             500000: 2,
+             200000: 3,
+             100000: 4,
+             50000: 5,
+             25000: 6,
+             10000: 7}[scale]
     corners = [[0,0],[0,0],[0,0],[0,0]]
     sizes = [[360, 240],[180,120],[60,40],[30,20],[15,10],[7.5,5],[3.75,2]]
     x0 = 0
     y0 = 0
-    print(latitude,longitude)
     for index in range(0,scale):
         width = sizes[index][0]
         height = sizes[index][1]
@@ -70,9 +76,11 @@ def corners(latitude, longitude, scale, corner):
         y1 = y0 + height
         latitude -= zone_y * height
         longitude -= zone_x * width
-        print([y0,x0],[y1,x0],[y1,x1],[y0,x1])
-        print(latitude,longitude)
-    return {0: [y0,x0],
-            1: [y1,x0],
-            2: [y1,x1],
-            3: [y0,x1]}[corner]
+    if hemisphere % 2 == 1:
+        x0,x1 = x1,x0
+    if hemisphere > 1:
+        y0,y1 = y1,y0
+    return {0: y1,
+            1: x0,
+            2: y0,
+            3: x1}[corner]
