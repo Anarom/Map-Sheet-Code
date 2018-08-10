@@ -54,6 +54,8 @@ def generate_name(latitude, longitude, scale, hemisphere):
     return final_name
 
 def corners(latitude, longitude, scale, hemisphere, corner):
+    if longitude == 10800:
+        longitude = 10440
     scale = {1000000: 1,
              500000: 2,
              200000: 3,
@@ -76,6 +78,10 @@ def corners(latitude, longitude, scale, hemisphere, corner):
         y1 = y0 + height
         latitude -= zone_y * height
         longitude -= zone_x * width
+    if y0 > 5400:
+        y0 = 5400
+    if y1 > 5400:
+        y1 = 5400
     if hemisphere % 2 == 1:
         x0,x1 = x1,x0
     if hemisphere > 1:
