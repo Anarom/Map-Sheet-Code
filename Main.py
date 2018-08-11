@@ -40,6 +40,7 @@ class Main_Window():
         self.widgets[5] = Button(self.root, text = 'Calculate')
         self.widgets[5].bind('<Button-1>', self.calc)
         self.widgets[5].place(x = 310, y = 100, width = 80, height = 40)
+        self.windows[6].canvas.place(x = 500, y = 35, width = 140, height = 100)
         self.root.mainloop()
 
     def calc(self, event):
