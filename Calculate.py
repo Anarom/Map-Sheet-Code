@@ -49,7 +49,7 @@ def generate_name(latitude, longitude, scale, hemisphere):
     for index in name_rules:
         final_name += '-' + str(name[index])
     if hemisphere > 1:
-        final_name += '(Ю)'
+        final_name += '(Ю.П.)'
     return final_name
 
 def corners(latitude, longitude, scale, hemisphere, corner):

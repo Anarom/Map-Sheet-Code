@@ -33,7 +33,7 @@ class Main_Window():
 
         self.widgets[4].place(x = 350,
                               y = 40,
-                              width = 105,
+                              width = 122,
                               height = 20,
                               anchor = CENTER)
 
