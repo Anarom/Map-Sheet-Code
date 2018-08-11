@@ -1,4 +1,6 @@
 def generate_name(latitude, longitude, scale, hemisphere):
+    if latitude >= 5280:
+        return 'AZIMUTH'
     pos_x = 30
     name = []
     x = []
