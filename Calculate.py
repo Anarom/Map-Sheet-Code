@@ -1,4 +1,3 @@
-from math import *
 def generate_name(latitude, longitude, scale, hemisphere):
     pos_x = 30
     name = []
