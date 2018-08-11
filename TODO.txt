@@ -1,8 +1,7 @@
 TODO
-2. Implement enhanced names starting at 76 deg. latitude
-3. Review all object names in the code, edit the cod according to PEP
-4. Return AZIMUTH message instead of name if latitude >= 88 deg.
-5. Review widgets positions, make window more elegant.
-6. With #4 make new sheet form - circle
+1. Implement enhanced names starting at 76 deg. latitude
+2. Review all object names in the code, edit the cod according to PEP
+3. Return AZIMUTH message instead of name if latitude >= 88 deg.
+4. Review widgets positions, make window more elegant.
+5. With #4 make new sheet form - circle
 DOING
-1. Change 'Þ' to '(Þ.Ï)', thus make name string longer
