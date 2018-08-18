@@ -1,84 +1,59 @@
 from tkinter import *
 
-
 class Hemisphere_Window():
     def __init__(self, root, x, y):
-        self.root = root
-        self.x = x
-        self.y = y
-        self.string = StringVar(self.root)
+        self.string = StringVar(root)
         self.string.set('NE')
-        self.menu = OptionMenu(root, self.string, 'NE', 'NW', 'SE', 'SW')
-        self.menu.place(x = self.x, y = self.y, width = 120, height = 30)
+        menu = OptionMenu(root, self.string, 'NE', 'NW', 'SE', 'SW')
+        menu.place(x = x, y = y, width = 120, height = 30)
 
     def get_value(self):
-        return {'NE': 0,
-                'NW': 1,
-                'SE': 2,
-                'SW': 3}[self.string.get()]
-
+        return {'NE': 0, 'NW': 1, 'SE': 2, 'SW': 3}[self.string.get()]
 
 class Scale_Window():
     def __init__(self, root, x, y):
-        self.root = root
-        self.x = x
-        self.y = y
-        self.scale = None
-        self.string = StringVar(self.root)
+        self.string = StringVar(root)
         self.string.set('1: 10 000')
-        self.menu = OptionMenu(root,
-                               self.string,
-                               '1: 10 000', '1: 25 000',
-                               '1: 50 000', '1: 100 000',
-                               '1: 200 000', '1: 500 000',
-                               '1: 1 000 000')
-        self.menu.place(x = self.x, y = self.y, width = 120, height = 30)
+        menu = OptionMenu(root, self.string, '1: 10 000', '1: 25 000',
+                               '1: 50 000', '1: 100 000', '1: 200 000',
+                               '1: 500 000', '1: 1 000 000')
+        menu.place(x = x, y = y, width = 120, height = 30)
 
     def get_value(self):
-        self.scale = self.string.get()[3:]
-        for index in range(0, len(self.scale) - 3):
-            if self.scale[index] == ' ':
-                self.scale = self.scale[:index] + self.scale[index + 1:]
-        return int(self.scale)
-
+        scale = self.string.get()[3:]
+        for index in range(0, len(scale) - 3):
+            if scale[index] == ' ':
+               scale = scale[:index] + scale[index + 1:]
+        return int(scale)
 
 class Coord_Window():
     def __init__(self, root, x, y, limit):
-        self.root = root
         self.limit = limit
-        self.x = x
-        self.y = y
-        self.getlist = [0, 0, 0]
-        self.list = [[0, '°'], [0, '′'], [0, '′′']]
-        for self.index in range(0, 3):
-            self.list[self.index][0] = Entry(self.root)
-            self.list[self.index][0].place(x = self.x,
-                                           y = self.y,
-                                           width = 30,
-                                           height = 20)
-            self.list[self.index][1] = Label(self.root,
-                                             text = self.list[self.index][1],
-                                             font = '14')
-            self.list[self.index][1].place(x = self.x + 25,
-                                           y = self.y,
-                                           width=20,
-                                           height = 20)
-            self.x += 50
+        self.widgets = [[0, '°'], [0, '′'], [0, '′′']]
+        for index in range(0, 3):
+            self.widgets[index][0] = Entry(root)
+            self.widgets[index][0].place(x = x, y = y, width = 30, height = 20)
+            self.widgets[index][1] = Label(root, text = self.widgets[index][1], font = '14')
+            self.widgets[index][1].place(x = x + 25, y = y, width=20, height = 20)
+            x += 50
 
     def get_value(self):
+        coord = [0, 0, 0]
+        
         for index in range(0, 3):
-            if self.list[index][0].get() == '':
-                self.list[index][0].insert(0, 0)
-            self.getlist[index] = float(self.list[index][0].get())
-        if self.getlist[0] * 60 + self.getlist[1] + self.getlist[2] / 60 >= self.limit * 60:
-            self.getlist[0] = self.limit - 1
-            self.getlist[1] = 59
-            self.getlist[2] = 59
-        self.getlist[1] += self.getlist[2] // 60
-        self.getlist[2] %= 60
-        self.getlist[0] += self.getlist[1] // 60
-        self.getlist[1] %= 60
+            if self.widgets[index][0].get() == '':
+                self.widgets[index][0].insert(0, 0)
+            coord[index] = float(self.widgets[index][0].get())
+            
+        if coord[0] * 60 + coord[1] + coord[2] / 60 >= self.limit * 60:
+            coord[0] = self.limit - 1
+            coord[1] = 59
+            coord[2] = 59
+        coord[1] += coord[2] // 60
+        coord[2] %= 60
+        coord[0] += coord[1] // 60
+        coord[1] %= 60
         for index in range(0, 3):
-            self.list[index][0].delete(0, END)
-            self.list[index][0].insert(0, int(self.getlist[index]))
-        return self.getlist[0] * 60 + self.getlist[1] + self.getlist[2] / 60
+            self.widgets[index][0].delete(0, END)
+            self.widgets[index][0].insert(0, int(coord[index]))
+        return coord[0] * 60 + coord[1] + coord[2] / 60
