@@ -1,10 +1,19 @@
+from enhance import *
 def generate_name(latitude, longitude, scale, hemisphere):
+    mod = 0
     if latitude >= 5280:
         return 'AZIMUTH'
+    if latitude >= 3600:
+        mod = 1
+    if latitude >= 4560 and scale == 200000:
+        mod = 2
+    elif latitude >= 4560 and scale != 500000:
+        mod = 3
     pos_x = 30
     name = []
     x = []
     y = []
+    indexes = [[0,0],[0,5],[0,1],[0,2],[0,5],[0,3],[0,4],[0,5]]
     symbols = [['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L',
                 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'Z'],
                ['А', 'Б', 'В', 'Г'],
@@ -25,7 +34,9 @@ def generate_name(latitude, longitude, scale, hemisphere):
 
     pos_x += longitude // 360 + 1
     name.append(symbols[0][int(latitude // 240)])
+    indexes[0][0] = int(latitude // 240) + 1
     name.append(int(pos_x % 60))
+    indexes[1][0] = int(pos_x % 60)
     latitude -= latitude // 240 * 240
     longitude -= (pos_x - 1 - 30 * (1 - hemisphere % 2)) * 360
 
@@ -36,10 +47,13 @@ def generate_name(latitude, longitude, scale, hemisphere):
             longitude -= (x[index] - 1) * coef_x[index]
             latitude -= (coef_pos[index] - 1 - y[index]) * coef_y[index]
         if index == 2 or index == 5:
+            indexes[index + 2][0] = int(y[index] * coef_pos[index] + x[index])
             name.append(int(y[index] * coef_pos[index] + x[index]))
         else:
+            indexes[index + 2][0] = int(y[index] * coef_pos[index] + x[index] - 1) + 1
             name.append(symbols[index + 1][int(y[index] * coef_pos[index] + x[index] - 1)])
-
+    if mod != 0 and scale >= 100000:
+        name = enh(mod, scale, name, indexes, symbols)
     final_name = name[0] + '-' + str(name[1])
     name_rules = {10000: [4,5,6,7],
                   25000: [4,5,6],
