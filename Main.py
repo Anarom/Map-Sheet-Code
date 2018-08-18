@@ -1,6 +1,7 @@
 from tkinter import *
 from Border import *
 from Calculate import *
+from Corner import *
 from Widgets import *
 
 class Main_Window():
@@ -19,11 +20,11 @@ class Main_Window():
             self.instances[6].canvas.place(x = 500, y = 35, width = 140, height = 100)
         self.code.set(generate_name(*values))
         for index in range(0,4):
-            coord =  corners(*values, index)
+            coord =  get_corner(*values, index)
             deg = coord // 60
             min = coord - deg * 60
             sec = (min - int(min)) * 60
-            self.instances[4].str_list[index].set(f'{int(deg)}° {int(min)}′ {round(sec)}′′')
+            self.instances[4].string_list[index].set(f'{int(deg)}° {int(min)}′ {round(sec)}′′')
         
     def setup(self):
         root = Tk()
@@ -38,8 +39,8 @@ class Main_Window():
         self.instances[2] = Scale_Window(root, 120, 85)
         self.instances[3] = Hemisphere_Window(root, 120, 125)
         self.instances[4] = Border_Window(root, 500, 40)
-        self.instances[5] = Border_Img(root, 0)
-        self.instances[6] = Border_Img(root, 1)
+        self.instances[5] = Border_Img(root, False)
+        self.instances[6] = Border_Img(root, True)
         self.instances[6].canvas.place(x = 500, y = 35, width = 140, height = 100)
     
         widgets = ['Latitude', 'Longitude', 'Scale', 'Hemisphere', '', '']
