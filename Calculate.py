@@ -1,4 +1,4 @@
-from enhance import *
+from Extend import *
 def generate_name(latitude, longitude, scale, hemisphere):
     mod = 0
     if latitude >= 5280:
@@ -14,19 +14,19 @@ def generate_name(latitude, longitude, scale, hemisphere):
     x = []
     y = []
     indexes = [[0,0],[0,5],[0,1],[0,2],[0,5],[0,3],[0,4],[0,5]]
-    symbols = [['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L',
-                'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'Z'],
-               ['А', 'Б', 'В', 'Г'],
-               ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX",
+    symbols = (('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L',
+                'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'Z'),
+               ('А', 'Б', 'В', 'Г'),
+               ("I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX",
                 "X", "XI", "XII", "XIII", "XIV", "XV", "XVI", "XVII",
                 "XVIII", "XIX", "XX", "XXI", "XXII", "XXIII", "XXIV",
                 "XXV", "XXVI", "XXVII", "XXVIII", "XXIX", "XXX", "XXXI",
-                "XXXII", "XXXIII", "XXXIV", "XXXV", "XXXVI"], [],
-               ['А', 'Б', 'В', 'Г'],
-               ['а', 'б', 'в', 'г']]
-    coef_x = [180, 60, 30, 15, 7.5, 3.75]  # width of zone
-    coef_y = [120, 40, 20, 10, 5, 2.5]  # height of zone
-    coef_pos = [2, 6, 12, 2, 2, 2]  # number of rows in zone
+                "XXXII", "XXXIII", "XXXIV", "XXXV", "XXXVI"), (),
+               ('А', 'Б', 'В', 'Г'),
+               ('а', 'б', 'в', 'г'))
+    coef_x = (180, 60, 30, 15, 7.5, 3.75)  # width of zone
+    coef_y = (120, 40, 20, 10, 5, 2.5)  # height of zone
+    coef_pos = (2, 6, 12, 2, 2, 2)  # number of rows in zone
     
     if hemisphere % 2 == 1:
         pos_x = 0
@@ -52,8 +52,9 @@ def generate_name(latitude, longitude, scale, hemisphere):
         else:
             indexes[index + 2][0] = int(y[index] * coef_pos[index] + x[index] - 1) + 1
             name.append(symbols[index + 1][int(y[index] * coef_pos[index] + x[index] - 1)])
+
     if mod != 0 and scale >= 100000:
-        name = enh(mod, scale, name, indexes, symbols)
+        name = extend_name(mod, scale, name, indexes, symbols)
     final_name = name[0] + '-' + str(name[1])
     name_rules = {10000: [4,5,6,7],
                   25000: [4,5,6],
