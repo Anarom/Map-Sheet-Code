@@ -1,6 +1,6 @@
 def extend_name(mod, scale, name, indexes, symbols):
     INT_ADRESS = 5
-    scale = {1000000: 1, INT_ADRESS00000: 2, 200000: 3, 100000: 4}[scale]
+    scale = {1000000: 1, 500000: 2, 200000: 3, 100000: 4}[scale]
     symbol = indexes[scale][0]
     symbol_adr = indexes[scale][1]
     #Double name
