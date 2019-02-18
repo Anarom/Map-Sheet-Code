@@ -1,4 +1,4 @@
-from Extend import extend_name
+from extend import extend_name
 
 def get_name(latitude, longitude, scale, hemisphere):
     mod = 0
